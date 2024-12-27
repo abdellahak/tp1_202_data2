@@ -10,6 +10,7 @@
     </div>
     @endif
     <form action="{{route('categories.update', $categorie->id)}}" method="POST">
+        @method('PUT')
         @csrf
         <div>
             <label for="nom">Nom :</label><br>
