@@ -24,7 +24,7 @@
     </script>
   </head>
 
-  <body class="bg-slate-900 text-white dark:bg-white dark:text-black">
+  <body class="bg-slate-900 text-white dark:bg-white dark:text-black relative">
     <div class="flex">
       <div class="container hidden md:block w-1/6 min-w-56 bg-slate-800 text-white dark:bg-gray-200 dark:text-black">
         <h1 class="text-3xl my-5 p-4">Tableau de bord</h1>
@@ -74,7 +74,7 @@
           </div>
         </div>
 
-        <div class="p-4 overflow-x-auto">
+        <div class="p-4 overflow-x-auto relative">
           <table class="min-w-full shadow-md overflow-hidden">
             <thead class="bg-slate-800 text-white dark:bg-gray-200 dark:text-black rounded-lg">
               <tr>
@@ -97,32 +97,88 @@
                   <td class="py-2 px-4">{{ $item->description }}</td>
                   <td class="py-2 px-4">{{ $item->categorie->nom }}</td>
                   <td class="py-2 px-4 text-center">
-                    <a href="{{ route('produits.show', $item->id) }}" class="text-blue-500 hover:underline" title="Details">
+                    <a href="{{ route('produits.show', $item->id) }}" class="text-blue-500 hover:underline"
+                      title="Details">
                       <i class="fa-solid fa-circle-info"></i>
                     </a>
                   </td>
                   <td class="py-2 px-4 text-center">
-                    <a href="{{ route('produits.edit', $item->id) }}" class="text-yellow-500 hover:underline" title="Modifier">
+                    <a href="{{ route('produits.edit', $item->id) }}" class="text-yellow-500 hover:underline"
+                      title="Modifier">
                       <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                   </td>
                   <td class="py-2 px-4 text-center">
-                    <form action="" method="POST" style="margin: 0">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" title="Supprimer">
-                        <i class="fa-solid fa-trash text-red-500"></i>
-                      </button>
-                      {{-- <input type="submit" value="Supprimer" class="text-red-500 hover:underline cursor-pointer"> --}}
-                    </form>
+                    <button type="button" data-id="{{ $item->id }}" class="deleteButton" title="Supprimer">
+                      <i class="fa-solid fa-trash text-red-500"></i>
+                    </button>
                   </td>
                 </tr>
               @endforeach
             </tbody>
           </table>
+          <div class="w-full h-full fixed top-0 left-0 hidden justify-center items-center" id="deleteModalDiv">
+
+
+            <div
+              class="relative transform overflow-hidden rounded-lg dark:bg-white bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div class="dark:bg-white bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div
+                    class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full dark:bg-red-100 bg-red-200 sm:mx-0 sm:size-10">
+                    <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" aria-hidden="true" data-slot="icon">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-base font-semibold dark:text-gray-900 text-gray-100" id="modal-title">Supprimer le produit</h3>
+                    <div class="mt-2">
+                      <p class="text-sm dark:text-gray-500 text-gray-300">Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dark:bg-gray-50 bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <form action="" method="POST" class="deleteForm m-0" id="">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit"
+                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Supprimer</button>
+                </form>
+                <button type="button" id="deleteAnnuler"
+                  class="mt-3 inline-flex w-full justify-center rounded-md dark:bg-white bg-gray-800 px-3 py-2 text-sm font-semibold dark:text-gray-900 text-gray-100 shadow-sm ring-1 ring-inset dark:ring-gray-300 ring-gray-600 dark:hover:bg-gray-50 hover:bg-gray-700 sm:mt-0 sm:w-auto">Annuler</button>
+              </div>
+            </div>
+
+
+            {{--  --}}
+          </div>
         </div>
       </div>
     </div>
+
+    <script>
+      const deleteButtons = document.querySelectorAll('.deleteButton');
+      const deleteModalDiv = document.querySelector('#deleteModalDiv');
+      const deleteAnnuler = document.querySelector('#deleteAnnuler');
+
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const productId = button.dataset.id;
+          deleteModalDiv.querySelector('.deleteForm').action = `{{ route('produits.destroy', '') }}/${productId}`;
+          deleteModalDiv.classList.remove('hidden');
+          deleteModalDiv.classList.add('flex');
+        });
+      });
+
+      deleteAnnuler.addEventListener('click', () => {
+        deleteModalDiv.classList.remove('flex');
+        deleteModalDiv.classList.add('hidden');
+      });
+    </script>
   </body>
 
   </html>

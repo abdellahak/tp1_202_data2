@@ -69,6 +69,7 @@ class ProduitController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Produit::destroy($id);
+        return redirect()->route('produits.index');
     }
 }
