@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProduitController;
 use App\Models\Categorie;
 use App\Models\Client;
+use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,3 +44,18 @@ Route::get('clients/edit/{id}', [ClientController::class, 'edit'])->name('client
 Route::put('/clients/update/{id}', [ClientController::class, 'update'])->name('clients.update');
 
 Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+
+// pour le produit
+
+Route::get('/produits',[ProduitController::class, 'index'])->name('produits.index');
+
+
+Route::get('produits/{id}', [ProduitController::class, 'show'])
+    ->where('id', '[0-9]+')
+    ->name('produits.show');
+
+Route::get('produits/create', [ProduitController::class, 'create'])->name('produits.create');
+
+Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
+
+Route::get('/produits/edit/{id}', [ProduitController::class, 'edit'])->name('produits.edit');

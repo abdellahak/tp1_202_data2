@@ -33,6 +33,9 @@
                 <li class="my-1">
                     <a href="{{route('categories.index')}}" class="w-full bg-slate-700 dark:bg-gray-300 block p-3 text-md border-r-4 border-r-solid border-r-blue-600"><i class="fa-solid fa-code-fork mx-2"></i>Categories</a>
                 </li>
+                <li class="my-1">
+                    <a href="{{route('produits.index')}}" class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i class="fa-solid fa-store mx-2"></i>Produits</a>
+                </li>
             </ul>
         </div>
         <div class="container mx-auto p-4 bg-slate-900 dark:bg-white">
@@ -64,13 +67,13 @@
                                 <td class="py-2 px-4">{{$item->id}}</td>
                                 <td class="py-2 px-4">{{$item->nom}}</td>
                                 <td class="py-2 px-4">{{$item->description}}</td>
-                                <td class="py-2 px-4">
+                                <td class="py-2 px-4 text-center">
                                     <a href="{{route('categories.show', $item->id)}}" class="text-blue-500 hover:underline">Details</a>
                                 </td>
-                                <td class="py-2 px-4">
+                                <td class="py-2 px-4 text-center">
                                     <a href="{{route('categories.edit', $item->id)}}" class="text-yellow-500 hover:underline">Modifier</a>
                                 </td>
-                                <td class="py-2 px-4">
+                                <td class="py-2 px-4 text-center">
                                     <form action="{{route('categories.destroy', $item->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')

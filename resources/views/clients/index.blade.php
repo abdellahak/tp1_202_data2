@@ -33,6 +33,9 @@
                 <li class="my-1">
                     <a href="{{route('categories.index')}}" class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i class="fa-solid fa-code-fork mx-2"></i>Categories</a>
                 </li>
+                <li class="my-1">
+                    <a href="{{route('produits.index')}}" class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i class="fa-solid fa-store mx-2"></i>Produits</a>
+                </li>
             </ul>
         </div>
         <div class="container mx-auto p-4 bg-slate-900 dark:bg-white">
@@ -70,16 +73,23 @@
                                 <td class="py-2 px-4">{{$item->telephone}}</td>
                                 <td class="py-2 px-4">{{$item->ville}}</td>
                                 <td class="py-2 px-4">{{$item->date_naissance}}</td>
-                                <td class="py-2 px-4">
-                                    <a href="{{route('clients.show', $item->id)}}" class="text-blue-500 hover:underline">Details</a>
+                                <td class="py-2 px-4 text-center">
+                                    <a href="{{route('clients.show', $item->id)}}" class="text-blue-500 hover:underline">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                        Details
+                                    </a>
                                 </td>
-                                <td class="py-2 px-4">
-                                    <a href="{{route('clients.edit', $item->id)}}" class="text-yellow-500 hover:underline">Modifier</a>
+                                <td class="py-2 px-4 text-center">
+                                    <a href="{{route('clients.edit', $item->id)}}" class="text-yellow-500 hover:underline">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Modifier
+                                    </a>
                                 </td>
-                                <td class="py-2 px-4">
+                                <td class="py-2 px-4 text-center">
                                     <form action="{{route('clients.destroy', $item->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
+                                        <i class="fa-solid fa-trash text-red-500 hover:underline cursor-pointer"></i>
                                         <input type="submit" value="Supprimer" class="text-red-500 hover:underline cursor-pointer">
                                     </form>
                                 </td>
