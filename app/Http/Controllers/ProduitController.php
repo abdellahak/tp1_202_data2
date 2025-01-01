@@ -32,6 +32,12 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nom'=> 'required|unique:produits,nom',
+            'prix'=> 'required|numeric',
+            'quantite'=> 'required|numeric',
+            'categorie_id'=> 'required'
+        ]);
         Produit::create($request->all());
         return redirect()->route('produits.index');
     }
@@ -69,7 +75,13 @@ class ProduitController extends Controller
      */
     public function destroy(string $id)
     {
-        Produit::destroy($id);
-        return redirect()->route('produits.index');
+        // Produit::destroy($id);
+        $produit = Produit::find($id);
+        if($produit){
+            $produit->delete();
+            return response()->json(['success' => true, 'message' => 'Item deleted successfully.']);
+            
+        };
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 }
