@@ -23,9 +23,8 @@ class CommandeController extends Controller
      */
     public function create()
     {
-        $produits = Produit::all();
-        $clients = Client::all();
-        return view('commandes.create', compact('produits', 'clients'));
+        $produits = Produit::with('clients');
+        return view('commandes.create', compact('produits'));
     }
 
     /**
@@ -34,8 +33,8 @@ class CommandeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_id' => 'required',
-            'produit_id' => 'required',
+            'client_id' => 'required|exists:clients,id',
+            'produit_id' => 'required|exists:produtis,id',
             'quantite' => 'required|numeric'
         ]);
         Commande::create($request->all());
@@ -47,7 +46,7 @@ class CommandeController extends Controller
      */
     public function show(string $id)
     {
-        $commande = Commande::find($id);
+        $commande = Commande::with('client')->where('id', $id)->first();
         return view('commandes.show', compact('commande'));
     }
 
@@ -56,10 +55,8 @@ class CommandeController extends Controller
      */
     public function edit(string $id)
     {
-        $commande = Commande::find($id);
-        $produits = Produit::all();
-        $clients = Client::all();
-        return view('commandes.edit', compact('commande', 'produits', 'clients'));
+        $commande = Commande::with('client')->where('id',40)->get();
+        return view('commandes.edit', compact('commande'));
     }
 
     /**

@@ -59,8 +59,6 @@
       <div class="flex justify-between items-center mb-4 p-4 dark:bg-white bg-gray-800 w-full">
         <h1 class="text-2xl font-bold">Liste des commandes</h1>
         <div class="flex flex-col gap-2 md:flex-row">
-          <a href="{{ route('commandes.create') }}"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 block">Ajouter Commande</a>
           <button onclick="toggleDarkMode()"
             class="dark:bg-gray-100 bg-gray-500 text-white dark:text-black px-4 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-300 block">
             <i class="fa-solid fa-moon"></i>
@@ -99,7 +97,7 @@
               <th class="py-2 px-4 text-start">Client</th>
               <th class="py-2 px-4 text-start">Date</th>
               <th class="py-2 px-4 text-start">Montant</th>
-              <th class="py-2 px-4 text-center" colspan="3">Action</th>
+              <th class="py-2 px-4 text-center" colspan="2">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -113,12 +111,6 @@
                   <a href="{{ route('commandes.show', $item->id) }}" class="text-blue-500 hover:underline"
                     title="Details">
                     <i class="fa-solid fa-circle-info"></i>
-                  </a>
-                </td>
-                <td class="py-2 px-4 text-center">
-                  <a href="{{ route('commandes.edit', $item->id) }}" class="text-yellow-500 hover:underline"
-                    title="Modifier">
-                    <i class="fa-solid fa-pen-to-square"></i>
                   </a>
                 </td>
                 <td class="py-2 px-4 text-center">

@@ -71,14 +71,6 @@ Route::put('/produits/update/{id}', [ProduitController::class, 'update'])->name(
 
 Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
 
-Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');
-
-Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
-
 Route::get('/commandes/{id}', [CommandeController::class, 'show'])->name('commandes.show');
-
-Route::get('/commandes/edit/{id}', [CommandeController::class, 'edit'])->name('commandes.edit');
-
-Route::put('/commandes/update/{id}', [CommandeController::class, 'update'])->name('commandes.update');
 
 Route::delete('/commandes/{id}', [CommandeController::class, 'destroy'])->name('commandes.destroy');

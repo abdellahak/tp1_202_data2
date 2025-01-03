@@ -48,7 +48,7 @@
                 class="fa-solid fa-store mx-2"></i>Produits</a>
           </li>
           <li class="my-1">
-            <a href="{{route('commandes.index')}}"
+            <a href="{{ route('commandes.index') }}"
               class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i
                 class="fa-solid fa-cart-shopping mx-2"></i>Commandes</a>
           </li>
