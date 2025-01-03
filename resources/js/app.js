@@ -22,11 +22,15 @@ $(document).ready(function () {
             url: `${deleteRouteBaseUrl}/${elementId}`,
             type: "DELETE",
             headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                "X-CSRF-TOKEN": $('input[type="hidden"]').val(),
             },
             success: function (response) {
                 deleteModalDiv.removeClass("flex").addClass("hidden");
-                $(`#item-${elementId}`).remove();
+                if (deleteConfirm.data("form") == "show") {
+                    window.location.href = deleteRouteBaseUrl;
+                } else {
+                    $(`#item-${elementId}`).remove();
+                }
             },
             error: function (xhr) {
                 console.log(xhr.responseText);

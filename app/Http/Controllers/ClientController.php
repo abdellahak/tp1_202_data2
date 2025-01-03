@@ -21,7 +21,17 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.create');
+        
+        $villes = [
+            'Casablanca', 'Fès', 'Marrakech', 'Tanger', 'Rabat', 'Agadir', 'Meknès', 'Oujda', 'Kenitra', 'Tétouan',
+            'Safi', 'Khouribga', 'El Jadida', 'Nador', 'Béni Mellal', 'Taza', 'Mohammédia', 'Ksar El Kébir', 'Settat',
+            'Salé', 'Laâyoune', 'Kénitra', 'Berkane', 'Errachidia', 'Inezgane', 'Taroudant', 'Ouarzazate', 'Al Hoceïma',
+            'Tiznit', 'Sidi Kacem', 'Guelmim', 'Bouskoura', 'Dakhla', 'Essaouira', 'Guercif', 'Sidi Slimane', 'Youssoufia',
+            'Tan-Tan', 'Azrou', 'Midelt', 'Larache', 'Martil', 'Fnideq', 'Sefrou', 'Boujdour', 'Zagora', 'Oulad Teima',
+            'Beni Ansar', 'Taourirt', 'Sidi Bennour', 'Bouznika', 'Benslimane', 'Ait Melloul', 'Berkane', 'Tinghir', 'Chichaoua',
+            'El Kelaa des Sraghna', 'Sidi Ifni', 'Azemmour', 'Aknoul', 'Ait Ourir', 'Ait Baha', 'Ait Ishaq', 'Ait Youssef Ou Ali'
+        ];
+        return view('clients.create', compact('villes'));
     }
 
     /**
@@ -48,7 +58,16 @@ class ClientController extends Controller
     public function edit(string $id)
     {
         $client = Client::find($id);
-        return view('clients.edit', compact('client'));
+        $villes = [
+            'Casablanca', 'Fès', 'Marrakech', 'Tanger', 'Rabat', 'Agadir', 'Meknès', 'Oujda', 'Kenitra', 'Tétouan',
+            'Safi', 'Khouribga', 'El Jadida', 'Nador', 'Béni Mellal', 'Taza', 'Mohammédia', 'Ksar El Kébir', 'Settat',
+            'Salé', 'Laâyoune', 'Kénitra', 'Berkane', 'Errachidia', 'Inezgane', 'Taroudant', 'Ouarzazate', 'Al Hoceïma',
+            'Tiznit', 'Sidi Kacem', 'Guelmim', 'Bouskoura', 'Dakhla', 'Essaouira', 'Guercif', 'Sidi Slimane', 'Youssoufia',
+            'Tan-Tan', 'Azrou', 'Midelt', 'Larache', 'Martil', 'Fnideq', 'Sefrou', 'Boujdour', 'Zagora', 'Oulad Teima',
+            'Beni Ansar', 'Taourirt', 'Sidi Bennour', 'Bouznika', 'Benslimane', 'Ait Melloul', 'Berkane', 'Tinghir', 'Chichaoua',
+            'El Kelaa des Sraghna', 'Sidi Ifni', 'Azemmour', 'Aknoul', 'Ait Ourir', 'Ait Baha', 'Ait Ishaq', 'Ait Youssef Ou Ali'
+        ];
+        return view('clients.edit', compact('client', 'villes'));
     }
 
     /**
@@ -66,7 +85,12 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        Client::destroy($id);
-        return redirect()->route('clients.index');
+        $client = Client::find($id);
+        if($client){
+            $client->delete();
+            return response()->json(['success' => true, 'message' => 'Item deleted successfully.']);
+            
+        };
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 }

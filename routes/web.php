@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ProduitController;
-use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Produit;
+use App\Models\Categorie;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\CategorieController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,19 +46,39 @@ Route::put('/clients/update/{id}', [ClientController::class, 'update'])->name('c
 
 Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
+
 // pour le produit
 
 Route::get('/produits',[ProduitController::class, 'index'])->name('produits.index');
 
 
-Route::get('produits/{id}', [ProduitController::class, 'show'])
+Route::get('/produits/{id}', [ProduitController::class, 'show'])
     ->where('id', '[0-9]+')
     ->name('produits.show');
 
-Route::get('produits/create', [ProduitController::class, 'create'])->name('produits.create');
+Route::get('/produits/create', [ProduitController::class, 'create'])->name('produits.create');
 
 Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
 
 Route::get('/produits/edit/{id}', [ProduitController::class, 'edit'])->name('produits.edit');
 
 Route::delete('/produits/{id}', [ProduitController::class, 'destroy'])->name('produits.destroy');
+
+Route::put('/produits/update/{id}', [ProduitController::class, 'update'])->name('produits.update');
+
+
+// pour la commande
+
+Route::get('/commandes', [CommandeController::class, 'index'])->name('commandes.index');
+
+Route::get('/commandes/create', [CommandeController::class, 'create'])->name('commandes.create');
+
+Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
+
+Route::get('/commandes/{id}', [CommandeController::class, 'show'])->name('commandes.show');
+
+Route::get('/commandes/edit/{id}', [CommandeController::class, 'edit'])->name('commandes.edit');
+
+Route::put('/commandes/update/{id}', [CommandeController::class, 'update'])->name('commandes.update');
+
+Route::delete('/commandes/{id}', [CommandeController::class, 'destroy'])->name('commandes.destroy');

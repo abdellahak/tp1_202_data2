@@ -33,10 +33,10 @@ class ProduitController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom'=> 'required|unique:produits,nom',
+            'nom'=> 'required|unique:produits,nom,',
             'prix'=> 'required|numeric',
             'quantite'=> 'required|numeric',
-            'categorie_id'=> 'required'
+            'categorie_id'=> 'required|exists:categories,id'
         ]);
         Produit::create($request->all());
         return redirect()->route('produits.index');
@@ -67,7 +67,14 @@ class ProduitController extends Controller
     public function update(Request $request, string $id)
     {
         $produit = Produit::find($id);
-        
+        $request->validate([
+            'nom'=> 'required|unique:produits,nom,'.$produit->id,
+            'prix'=> 'required|numeric',
+            'quantite'=> 'required|numeric',
+            'categorie_id'=> 'required|exists:categories,id'
+        ]);
+        $produit->update($request->all());
+        return redirect()->route('produits.index');
     }
 
     /**

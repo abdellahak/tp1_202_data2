@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-  <title>Clients</title>
+  <title>Commandes</title>
   <script>
     // Check if dark mode is enabled from localStorage
     const storedTheme = localStorage.getItem('theme');
@@ -20,7 +20,7 @@
       // Save the theme in localStorage
       localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
     }
-    const deleteRouteBaseUrl = "{{ url('clients') }}";
+    const deleteRouteBaseUrl = "{{ url('commandes') }}";
   </script>
 </head>
 
@@ -34,7 +34,7 @@
         <ul>
           <li class="my-1">
             <a href="{{ route('clients.index') }}"
-              class="w-full bg-slate-700 dark:bg-gray-300 block p-3 text-md border-r-4 border-r-solid border-r-blue-600"><i
+              class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i
                 class="fa-regular fa-user mx-2"></i>Clients</a>
           </li>
           <li class="my-1">
@@ -49,7 +49,7 @@
           </li>
           <li class="my-1">
             <a href="{{ route('commandes.index') }}"
-              class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i
+              class="w-full bg-slate-700 dark:bg-gray-300 block p-3 text-md border-r-4 border-r-solid border-r-blue-600"><i
                 class="fa-solid fa-cart-shopping mx-2"></i>Commandes</a>
           </li>
         </ul>
@@ -57,10 +57,10 @@
     </div>
     <div class="w-full mx-auto bg-slate-900 dark:bg-gray-100 flex flex-col h-screen">
       <div class="flex justify-between items-center mb-4 p-4 dark:bg-white bg-gray-800 w-full">
-        <h1 class="text-2xl font-bold">Liste des clients</h1>
+        <h1 class="text-2xl font-bold">Liste des commandes</h1>
         <div class="flex flex-col gap-2 md:flex-row">
-          <a href="{{ route('clients.create') }}"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 block">Ajouter Client</a>
+          <a href="{{ route('commandes.create') }}"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 block">Ajouter Commande</a>
           <button onclick="toggleDarkMode()"
             class="dark:bg-gray-100 bg-gray-500 text-white dark:text-black px-4 py-2 rounded hover:bg-gray-700 dark:hover:bg-gray-300 block">
             <i class="fa-solid fa-moon"></i>
@@ -69,11 +69,23 @@
       </div>
       <div class="container flex flex-col md:flex-row gap-2 p-4 pt-0">
         <div class="flex flex-row items-center">
-          <p class="bg-slate-800 dark:bg-gray-200 w-full md:w-fit px-2 py-2 rounded-l-lg ">Le nombre des clients est
+          <p class="bg-slate-800 dark:bg-gray-200 h-full w-full md:w-fit px-2 py-2 rounded-l-lg flex items-center">Le
+            nombre des
+            commandes est
             : </p>
           <p
-            class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold px-2 py-2 min-w-14 md:min-w-fit text-center">
-            {{ count($clients) }}
+            class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold h-full px-2 py-2 min-w-14 md:min-w-fit text-center flex items-center">
+            {{ count($commandes) }}
+          </p>
+        </div>
+        <div class="flex flex-row items-center">
+          <p class="bg-slate-800 dark:bg-gray-200 h-full w-full md:w-fit px-2 py-2 rounded-l-lg flex items-center">Le
+            total de prix des
+            commandes est
+            : </p>
+          <p
+            class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold h-full px-2 py-2 min-w-14 md:min-w-fit text-center flex items-center">
+            {{ $commandes->reduce(fn($total, $item) => ($total += $item->montant), 0) }} DH
           </p>
         </div>
       </div>
@@ -81,34 +93,30 @@
       <div
         class="p-4 overflow-y-auto relative pt-0 scrollbar dark:scrollbar-thumb-gray-300 dark:scrollbar-track-gray-100 scrollbar-thumb-gray-700 scrollbar-track-gray-900">
         <table class="min-w-full shadow-md">
-          <thead class="bg-slate-800 text-white dark:bg-gray-200 dark:text-black rounded-lg sticky top-0">
+          <thead class="bg-slate-800 text-white dark:bg-gray-200 dark:text-black rounded-md sticky top-0">
             <tr>
               <th class="py-2 px-4 text-start">Id</th>
-              <th class="py-2 px-4 text-start">Prenom</th>
-              <th class="py-2 px-4 text-start">Nom</th>
-              <th class="py-2 px-4 text-start">Telephone</th>
-              <th class="py-2 px-4 text-start">Ville</th>
-              <th class="py-2 px-4 text-start">Date de naissance</th>
+              <th class="py-2 px-4 text-start">Client</th>
+              <th class="py-2 px-4 text-start">Date</th>
+              <th class="py-2 px-4 text-start">Montant</th>
               <th class="py-2 px-4 text-center" colspan="3">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($clients as $item)
+            @foreach ($commandes as $item)
               <tr class="hover:bg-slate-700 dark:hover:bg-gray-300" id="item-{{ $item->id }}">
                 <td class="py-2 px-4">{{ $item->id }}</td>
-                <td class="py-2 px-4">{{ $item->prenom }}</td>
-                <td class="py-2 px-4">{{ $item->nom }}</td>
-                <td class="py-2 px-4">{{ $item->telephone }}</td>
-                <td class="py-2 px-4">{{ $item->ville }}</td>
-                <td class="py-2 px-4">{{ $item->date_naissance }}</td>
+                <td class="py-2 px-4">{{ $item->client->nom }}</td>
+                <td class="py-2 px-4">{{ $item->date }}</td>
+                <td class="py-2 px-4">{{ $item->montant }}</td>
                 <td class="py-2 px-4 text-center">
-                  <a href="{{ route('clients.show', $item->id) }}" class="text-blue-500 hover:underline"
+                  <a href="{{ route('commandes.show', $item->id) }}" class="text-blue-500 hover:underline"
                     title="Details">
                     <i class="fa-solid fa-circle-info"></i>
                   </a>
                 </td>
                 <td class="py-2 px-4 text-center">
-                  <a href="{{ route('clients.edit', $item->id) }}" class="text-yellow-500 hover:underline"
+                  <a href="{{ route('commandes.edit', $item->id) }}" class="text-yellow-500 hover:underline"
                     title="Modifier">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </a>
@@ -138,10 +146,11 @@
                   </svg>
                 </div>
                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                  <h3 class="text-base font-semibold dark:text-gray-900 text-gray-100" id="modal-title">Supprimer le
-                    client</h3>
+                  <h3 class="text-base font-semibold dark:text-gray-900 text-gray-100" id="modal-title">Supprimer la
+                    commande</h3>
                   <div class="mt-2">
-                    <p class="text-sm dark:text-gray-500 text-gray-300">Êtes-vous sûr de vouloir supprimer ce client
+                    <p class="text-sm dark:text-gray-500 text-gray-300">Êtes-vous sûr de vouloir supprimer cette
+                      commande
                       ? Cette action est irréversible.</p>
                   </div>
                 </div>

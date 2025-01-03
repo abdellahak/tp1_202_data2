@@ -77,7 +77,12 @@ class CategorieController extends Controller
      */
     public function destroy(string $id)
     {
-        Categorie::destroy($id);
+        $categorie = categorie::find($id);
+        if($categorie){
+            $categorie->delete();
+            return response()->json(['success' => true, 'message' => 'Item deleted successfully.']);
+            
+        };
         return redirect()->route('categories.index');
     }
 }
