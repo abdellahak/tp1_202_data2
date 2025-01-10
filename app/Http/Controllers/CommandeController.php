@@ -14,7 +14,7 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        $commandes = Commande::all();
+        $commandes = Commande::with('client', 'produits')->get();
         return view('commandes.index', compact('commandes'));
     }
 
@@ -46,10 +46,10 @@ class CommandeController extends Controller
      */
     public function show(string $id)
     {
-        $commande = Commande::with('client')->where('id', $id)->first();
+        $commande = Commande::with('client', 'produits')->where('id', $id)->first();
         return view('commandes.show', compact('commande'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */

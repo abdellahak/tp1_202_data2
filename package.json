@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"vite\" --names='server,vite'"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",

@@ -1,35 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-  <title>Modifier un client</title>
-  <script>
-    // Check if dark mode is enabled from localStorage
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
-    }
-    // Function to toggle dark mode
-    function toggleDarkMode() {
-      const isDarkMode = document.documentElement.classList.toggle('dark');
-      // Save the theme in localStorage
-      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-    }
-    const deleteRouteBaseUrl = "{{ url('clients') }}";
-  </script>
-</head>
-
-<body class="bg-gray-100 text-white dark:bg-white dark:text-black min-h-screen">
-  <div class="flex min-h-screen bg-gray-100">
-    <div
-      class="container hidden md:block w-1/6 min-w-56 min-h-full bg-slate-800 text-white dark:bg-gray-200 dark:text-black">
-      <h1 class="text-3xl my-5 p-4">Tableau de bord</h1>
-      <ul>
+@extends('layouts.admin')
+@section('title','details de client')
+@section('aside')
         <li class="my-1">
           <a href="{{ route('clients.index') }}"
             class="w-full bg-slate-700 dark:bg-gray-300 block p-3 text-md border-r-4 border-r-solid border-r-blue-600"><i
@@ -50,8 +21,8 @@
             class="w-full hover:bg-slate-700 dark:hover:bg-gray-300 block p-3 text-md"><i
               class="fa-solid fa-cart-shopping mx-2"></i>Commandes</a>
         </li>
-      </ul>
-    </div>
+@endsection
+@section('content')
     <div class="mx-auto w-full bg-slate-900 dark:bg-gray-100">
       <div class="flex justify-between items-center mb-4 p-4 dark:bg-white bg-slate-800 w-full">
         <div class="flex flex-col gap-2 md:flex-row w-full">
@@ -150,7 +121,4 @@
         </div>
       </div>
     </div>
-  </div>
-</body>
-
-</html>
+@endsection

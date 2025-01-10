@@ -30,6 +30,7 @@ $(document).ready(function () {
                     window.location.href = deleteRouteBaseUrl;
                 } else {
                     $(`#item-${elementId}`).remove();
+                    deleteConfirm.closest("tr").remove();
                 }
             },
             error: function (xhr) {
