@@ -13,8 +13,9 @@ class ProduitController extends Controller
      */
     public function index()
     {
+        $categories = Categorie::all();
         $produits = Produit::with('categorie')->get(); 
-        return view('produits.index', compact('produits'));
+        return view('produits.index', compact('produits', 'categories'));
     }
 
     /**
@@ -90,4 +91,15 @@ class ProduitController extends Controller
         };
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
+    public function filter(Request $request)
+    {
+        $categories = Categorie::all();
+        if($request->categorie_id == "-1"){
+            $produits = Produit::all();
+        }else{
+            $produits = Produit::where('categorie_id', $request->categorie_id)->get();
+        }
+        return view('produits.index', compact('produits', 'categories'));
+    }
 }
+    

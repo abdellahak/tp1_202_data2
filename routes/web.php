@@ -66,6 +66,8 @@ Route::delete('/produits/{id}', [ProduitController::class, 'destroy'])->name('pr
 
 Route::put('/produits/update/{id}', [ProduitController::class, 'update'])->name('produits.update');
 
+Route::get('/produits/filter', [ProduitController::class, 'filter'])->name('produits.filter');
+
 
 // pour la commande
 

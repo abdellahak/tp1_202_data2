@@ -76,8 +76,19 @@
               <td class="py-2 px-4">{{ $item->date }}</td>
               <td class="py-2 px-4">{{ $item->montant }}</td>
               <td class="py-2 px-4">
-                {{ $item->status }}
-
+                @if ($item->status == 'en cours')
+                  <span class="inline-block bg-slate-500  00 bg-opacity-20 text-slate-900 p-1 rounded font-bold">•
+                    {{ $item->status }}</span>
+                @elseif($item->status == 'envoyée')
+                  <span class="inline-block bg-blue-600 bg-opacity-20 text-slate-900 p-1 rounded font-bold">•
+                    {{ $item->status }}</span>
+                @elseif($item->status == 'livré')
+                  <span class="inline-block bg-green-400 bg-opacity-20 text-green-600 p-1 rounded font-bold">•
+                    {{ $item->status }}</span>
+                @else
+                  <span class="inline-block bg-red-500 bg-opacity-20 text-red-500 p-1 rounded font-bold">•
+                    {{ $item->status }}</span>
+                @endif
               </td>
               <td class="py-2 px-4 text-center">
                 <a href="{{ route('commandes.show', $item->id) }}" class="text-blue-500 hover:underline" title="Details">

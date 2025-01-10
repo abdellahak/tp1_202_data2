@@ -32,23 +32,41 @@
         </button>
       </div>
     </div>
-    <div class="container flex flex-col md:flex-row gap-2 p-4 pt-0">
-      <div class="flex flex-row items-center">
-        <p class="bg-slate-800 dark:bg-gray-200 w-full md:w-fit px-2 py-2 rounded-l-lg ">Le nombre des produits est
-          : </p>
-        <p
-          class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold px-2 py-2 min-w-14 md:min-w-fit text-center">
-          {{ count($produits) }}
-        </p>
+    <div class="container flex flex-col md:flex-row p-4 pt-0 justify-between">
+      <div class="container flex flex-col md:flex-row gap-2">
+        <div class="flex flex-row items-center">
+          <p class="bg-slate-800 dark:bg-gray-200 w-full md:w-fit px-2 py-2 rounded-l-lg ">Le nombre des produits est
+            : </p>
+          <p
+            class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold px-2 py-2 min-w-14 md:min-w-fit text-center">
+            {{ count($produits) }}
+          </p>
+        </div>
+        <div class="flex flex-row items-center">
+          <p class="bg-slate-800 dark:bg-gray-200 w-full md:w-fit px-2 py-2 rounded-l-lg ">Le total de quantité des
+            produits est
+            : </p>
+          <p
+            class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold px-2 py-2 min-w-14 md:min-w-fit text-center">
+            {{ $produits->reduce(fn($total, $item) => ($total += $item->quantite), 0) }}
+          </p>
+        </div>
       </div>
-      <div class="flex flex-row items-center">
-        <p class="bg-slate-800 dark:bg-gray-200 w-full md:w-fit px-2 py-2 rounded-l-lg ">Le total de quantité des
-          produits est
-          : </p>
-        <p
-          class="bg-blue-600 dark:bg-blue-600 text-white rounded-r-lg font-semibold px-2 py-2 min-w-14 md:min-w-fit text-center">
-          {{ $produits->reduce(fn($total, $item) => ($total += $item->quantite), 0) }}
-        </p>
+      <div>
+        <form action="{{ route('produits.filter') }}" id="filterForm"
+          class="max-w-sm mx-auto flex flex-col md:flex-row gap-2">
+          <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choisir une
+            catégorie : </label>
+          <select id="categories" name="categorie_id"
+            class="w-full my-2 px-2 py-2 rounded focus:outline-none dark:text-black text-white bg-slate-700 dark:bg-gray-200 cursor-pointer">
+            <option value="-1">Tous les catégories</option>
+            @foreach ($categories as $categorie)
+              <option value="{{ $categorie->id }}" {{ request('categorie_id') == $categorie->id ? 'selected' : '' }}>
+                {{ $categorie->nom }}
+              </option>
+            @endforeach
+          </select>
+        </form>
       </div>
     </div>
 
@@ -137,5 +155,9 @@
 
   <script>
     const deleteRouteBaseUrl = "{{ url('produits') }}";
+    const filterForm = document.getElementById('filterForm');
+    filterForm.addEventListener('change', () => {
+      filterForm.submit();
+    });
   </script>
 @endsection
