@@ -37,9 +37,6 @@
     </div>
     @yield('content')
   </div>
-  <script>
-    const deleteRouteBaseUrl = "{{ url('commandes') }}";
-  </script>
 </body>
 
 </html>

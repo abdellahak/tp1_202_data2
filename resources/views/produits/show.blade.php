@@ -118,4 +118,7 @@
       </div>
     </div>
   </div>
+  <script>
+    const deleteRouteBaseUrl = "{{ url('produits') }}";
+  </script>
 @endsection

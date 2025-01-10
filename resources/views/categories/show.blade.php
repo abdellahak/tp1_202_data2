@@ -106,4 +106,7 @@
       </div>
     </div>
   </div>
+  <script>
+    const deleteRouteBaseUrl = "{{ url('categories') }}";
+  </script>
 @endsection

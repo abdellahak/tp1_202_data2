@@ -134,4 +134,7 @@
     </div>
   </div>
 
+  <script>
+    const deleteRouteBaseUrl = "{{ url('clients') }}";
+  </script>
 @endsection
